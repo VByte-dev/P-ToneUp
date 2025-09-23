@@ -1,0 +1,20 @@
+@import "tailwindcss";
+@plugin "tailwindcss-motion";
+
+/* Fonts */
+@font-face {
+  font-family: tiemposLight;
+  src: url("../public/Fonts/TiemposHeadline-Light.otf");
+}
+@font-face {
+  font-family: tiemposLightItalic;
+  src: url("../public/Fonts/TiemposHeadline-LightItalic.otf");
+}
+@font-face {
+  font-family: space;
+  src: url("../public/Fonts/SpaceGrotesk-VariableFont_wght.ttf");
+}
+@font-face {
+  font-family: bricolage;
+  src: url("../public/Fonts/BricolageGrotesque10pt-Regular-BF648bd57857eb7.otf");
+}
