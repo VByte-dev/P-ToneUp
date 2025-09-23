@@ -10,7 +10,6 @@ let Editor = () => {
     "⚡ This box is hungry. Drop a draft and click generate!"
   );
 
-  // Loading placeholder
   const loadingPlaceholders = [
     "⚡ Thinking hard…",
     "🤔 Brewing some ideas...",
@@ -32,17 +31,13 @@ let Editor = () => {
   let placeholder =
     loadingPlaceholders[Math.floor(Math.random() * loadingPlaceholders.length)];
 
-  // Handle text generation
   let handleGenerate = async (v) => {
-    // console.log(v);
     setOutputText(placeholder);
 
-    // Build prompt function
     let buildPrompt = ({ draft, mode, platform, style, tone }) => {
       let tonePart = tone ? `Use a ${tone} tone.` : "";
       let stylePart = style ? `Follow these style instructions: ${style}` : "";
 
-      // Mode-specific instructions
       let modePart = "";
       switch (mode) {
         case "Post":
@@ -52,7 +47,6 @@ let Editor = () => {
 - Make it scannable and attention-grabbing.  
 `;
           break;
-
         case "Reply":
           modePart = `
 - Rewrite it into a natural, engaging reply.  
@@ -61,7 +55,6 @@ let Editor = () => {
 - Avoid hashtags (they are uncommon in replies).  
 `;
           break;
-
         case "Outreach":
           modePart = `
 - Rewrite it into a personalized outreach message (like a DM).  
@@ -70,7 +63,6 @@ let Editor = () => {
 - Do NOT use hashtags, emojis, or formatting meant for public posts.  
 `;
           break;
-
         default:
           modePart = "- Refine the draft into a polished piece of writing.";
       }
@@ -88,11 +80,30 @@ Guidelines:
 `;
     };
 
-    // Fetching response
-    const apiKey = import.meta.env.VITE_API_KEY;
-    console.log(apiKey);
-
     try {
+      // ✅ NEW fetch to Vercel serverless function
+      let fData = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "openai/gpt-oss-20b:free",
+          messages: [
+            {
+              role: "user",
+              content: buildPrompt(v),
+            },
+          ],
+        }),
+      });
+
+      let data = await fData.json();
+      let text = data.choices[0].message.content;
+      setOutputText(text);
+      console.log("Generated Data", text);
+
+      // ❌ Old direct fetch (commented out for safety)
+      /*
+      const apiKey = import.meta.env.VITE_API_KEY;
       let fData = await fetch("https://openrouter.ai/api/v1/chat/completions", { 
         method: "POST",
         headers: {
@@ -109,32 +120,22 @@ Guidelines:
           ],
         }),
       });
-
-      let data = await fData.json();
-      let text = data.choices[0].message.content;
-      setOutputText(text);
-      console.log("Generated Data", text);
+      */
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <>
-      <div>
-        {/* Settings */}
-        {/* <div className="mt-10 mx-8 sm:mx-14 md:mx-20 lg:mx-20 xl:mx-20 2xl:mx-20">
-          <Settings />
-        </div> */}
-        {/* Input form */}
-        <div className="mt-30 mb-20 mx-8 sm:mx-14 md:mx-20 lg:mx-80 xl:mx-106 2xl:mx-120">
-          <InputForm generate={handleGenerate} />
-        </div>
-        <div className="my-20 mx-8 sm:mx-14 md:mx-20 lg:mx-80 xl:mx-106 2xl:mx-120">
-          <Output outputText={outputText} />
-        </div>
+    <div>
+      {/* Input form */}
+      <div className="mt-30 mb-20 mx-8 sm:mx-14 md:mx-20 lg:mx-80 xl:mx-106 2xl:mx-120">
+        <InputForm generate={handleGenerate} />
       </div>
-    </>
+      <div className="my-20 mx-8 sm:mx-14 md:mx-20 lg:mx-80 xl:mx-106 2xl:mx-120">
+        <Output outputText={outputText} />
+      </div>
+    </div>
   );
 };
 
