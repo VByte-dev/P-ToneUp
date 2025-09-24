@@ -9,7 +9,7 @@ let Editor = () => {
     "⚡ This box is hungry. Drop a draft and click generate!"
   );
 
-  // Loading placeholder
+  // Loading states shown while generating content
   const loadingPlaceholders = [
     "⚡ Thinking hard…",
     "🤔 Brewing some ideas...",
@@ -31,13 +31,13 @@ let Editor = () => {
   let placeholder =
     loadingPlaceholders[Math.floor(Math.random() * loadingPlaceholders.length)];
 
-  // Handle text generation
+  // Handles text generation request
   let handleGenerate = async (v) => {
-    // console.log(v);
     setOutputText(placeholder);
 
-    // Build prompt function
+    // Builds the AI prompt strictly based on user selections
     let buildPrompt = ({ draft, mode, platform, style, tone }) => {
+      // Optional constraints
       let tonePart = tone ? `Use a ${tone} tone.` : "";
       let stylePart = style ? `Follow these style instructions: ${style}` : "";
 
@@ -46,7 +46,7 @@ let Editor = () => {
       switch (mode) {
         case "Post":
           modePart = `
-- Transform it into a polished standalone post designed for maximum engagement.  
+- Transform the draft into a polished standalone post designed for maximum engagement.  
 - Use platform-friendly formatting (hashtags, line breaks, emojis if natural).  
 - Make it scannable and attention-grabbing.  
 `;
@@ -74,57 +74,51 @@ let Editor = () => {
           modePart = "- Refine the draft into a polished piece of writing.";
       }
 
+      // Final prompt
       return `
 You are an expert social media content creator.  
-Your task is to take the following draft and rewrite ${draft} into a polished **${mode}** optimized for **${platform}**.  
+Your task is to take the following draft and rewrite it into a polished **${mode}** optimized for **${platform}**.  
+
+Draft:  
+"""  
+${draft}  
+"""
 
 Guidelines:  
-- Preserve the original idea, but improve clarity, flow, and engagement.
-- Avoid looking like it was made by AI
-- ${modePart}  
-- ${tonePart}  
-- ${stylePart}  
+- Only follow the selected options (mode, platform, tone, style).  
+- Do NOT infer or change mode/platform/style from the draft text.  
+- Preserve the original idea, but improve clarity, flow, and engagement.  
+- Avoid looking like it was made by AI.  
+${modePart}  
+${tonePart}  
+${stylePart}  
 `;
     };
 
-    // Fetching response
-    const apiKey = import.meta.env.VITE_API_KEY;
-    console.log(apiKey);
-
     try {
-      let fData = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "openai/gpt-oss-20b:free",
-          messages: [
-            {
-              role: "user",
-              content: buildPrompt(v),
-            },
-          ],
-        }),
+      const response = await puter.ai.chat(buildPrompt(v), {
+        model: "gpt-5-nano",
       });
 
-      let data = await fData.json();
-      let text = data.choices[0].message.content;
+      const text = response.message?.content || response.toString();
+
       setOutputText(text);
       console.log("Generated Data", text);
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      setOutputText("❌ Something went wrong. Please try again.");
     }
   };
 
   return (
     <>
       <div>
-        {/* Input form */}
+        {/* Input section */}
         <div className="mt-30 mb-20 mx-8 sm:mx-14 md:mx-20 lg:mx-80 xl:mx-106 2xl:mx-120">
           <InputForm generate={handleGenerate} />
         </div>
+
+        {/* Output section */}
         <div className="my-20 mx-8 sm:mx-14 md:mx-20 lg:mx-80 xl:mx-106 2xl:mx-120">
           <Output outputText={outputText} />
         </div>
