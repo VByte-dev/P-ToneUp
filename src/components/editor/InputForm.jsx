@@ -97,10 +97,10 @@ let InputForm = (props) => {
     <>
       <div className="space-y-6 selection:bg-purple-300 selection:text-black">
         {/* Draft input */}
-        <div className="font-[space]">
+        <div className="font-[space] border-2 border-purple-400/50 p-0.5 rounded-tl-md rounded-bl-md rounded-tr-md">
           <textarea
             placeholder="Paste or write your draft here..."
-            className="border-2 border-purple-400/50 bg-white/90 rounded-tl-md rounded-bl-md rounded-tr-md px-4 py-4 w-full transition outline-none min-h-50"
+            className="  rounded-tl-md rounded-bl-md rounded-tr-md px-4 py-4 w-full transition outline-none min-h-50"
             rows={5}
             value={formData.draft}
             onChange={(e) => handleChange("draft", e.target.value)}
@@ -220,7 +220,7 @@ let InputForm = (props) => {
         </div>
 
         {/* Style instructions */}
-        <div >
+        <div>
           <input
             type="text"
             placeholder="Tweak style, clarity, or impact..."
