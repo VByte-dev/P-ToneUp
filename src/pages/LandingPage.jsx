@@ -5,12 +5,12 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-center items-center bg-gray-50 px-6 sm:px-12 py-20 overflow-hidden">
+    <section className="relative min-h-screen flex flex-col justify-center items-center bg-amber-50 px-6 sm:px-12 py-24 overflow-hidden select-none">
       {/* Background: radial gradient + abstract blob */}
       <div className="absolute inset-0 pointer-events-none -z-10">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_#fbf8ff,_#f8fafc)] opacity-70"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_#fbf8ff,_#f8fafc)] opacity-80"></div>
         <svg
-          className="absolute right-0 bottom-0 w-[48rem] max-w-none opacity-20 transform translate-x-24 translate-y-24"
+          className="absolute right-0 bottom-0 w-[48rem] max-w-none opacity-20 translate-x-24 translate-y-24"
           viewBox="0 0 600 600"
           xmlns="http://www.w3.org/2000/svg"
           aria-hidden
@@ -24,70 +24,48 @@ const LandingPage = () => {
         </svg>
       </div>
 
-      {/* Content wrapper */}
-      <div className="w-full flex flex-col items-center text-center max-w-4xl my-4">
+      {/* Content */}
+      <div className="w-full flex flex-col items-center text-center max-w-4xl my-6">
         {/* Heading */}
         <h1
           className="max-w-3xl w-full font-[tiemposLight] text-gray-900 leading-[1.1] tracking-tight"
-          style={{ fontSize: "clamp(2.5rem, 5vw, 4.5rem)" }}
+          style={{ fontSize: "clamp(2.75rem, 5vw, 4.5rem)" }}
         >
-          Turn Your Ideas into{" "}
-          <span className="font-[tiemposLightItalic] text-amber-950">
+          From Rough Drafts to{" "}
+          <span className="font-[tiemposLightItalic] text-purple-700">
             Polished
-          </span>
-          , Share Ready Content
+          </span>{" "}
+          Posts in Seconds
         </h1>
 
-        {/* Supporting description */}
-        <p className="mt-10 max-w-2xl w-full text-base sm:text-lg md:text-xl font-[tiemposLight] text-gray-700 leading-relaxed">
-          ToneUp is your AI-powered writing companion. Instantly refine rough
-          drafts into captivating posts, professional replies, and persuasive
-          outreach messages - perfectly tailored for socialmedia.
+        {/* Subtext */}
+        <p className="mt-8 max-w-xl w-full text-base sm:text-lg md:text-xl font-[tiemposLight] text-gray-700 leading-relaxed">
+          ToneUp is your AI writing companion. Craft engaging posts,
+          professional replies, and persuasive outreach without overthinking the
+          words.
         </p>
       </div>
 
-      {/* Feature list */}
-      <ul className="mt-8 max-w-xl w-full mx-auto flex flex-col gap-5 px-4 bg-amber-50 p-8 rounded-2xl border-2 border-amber-100 shadow-sm">
-        <li className="flex items-start gap-3">
-          <span className="mt-1 text-amber-950 text-xl font-bold">✓</span>
-          <span className="text-gray-700 text-lg sm:text-xl font-[space]">
-            Instantly transform simple drafts into engaging, professional posts.
-          </span>
-        </li>
-        <li className="flex items-start gap-3">
-          <span className="mt-1 text-amber-950 text-xl font-bold">✓</span>
-          <span className="text-gray-700 text-lg sm:text-xl font-[space]">
-            Customize tone, style, and platform for maximum audience impact.
-          </span>
-        </li>
-        <li className="flex items-start gap-3">
-          <span className="mt-1 text-amber-950 text-xl font-bold">✓</span>
-          <span className="text-gray-700 text-lg sm:text-xl font-[space]">
-            Receive intelligent AI suggestions for posts, replies, and outreach.
-          </span>
-        </li>
-      </ul>
-
       {/* CTA */}
-      <div className="mt-12">
+      <div className="mt-14">
         <button
           aria-label="Launch ToneUp"
           onClick={() => navigate("/app")}
-          className="inline-flex items-center justify-center px-8 py-3 rounded-full font-[tiemposLight] text-white text-sm sm:text-base bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 shadow-lg hover:scale-105 transition-transform duration-200"
+          className="inline-flex items-center justify-center px-8 py-3 rounded-full font-[tiemposLight] text-white text-sm sm:text-base bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 shadow-lg hover:scale-105 hover:shadow-purple-300/40 transition-all duration-200"
         >
           Launch ToneUp
         </button>
       </div>
 
-      {/* Footer credit */}
-      <div className="mt-32 text-amber-900 font-base font-[bricolage]">
+      {/* Footer */}
+      <div className="mt-28 text-amber-900 font-base font-[bricolage] ">
         <a
           href="https://vbyte-dev.vercel.app"
-          className="flex justify-center items-center gap-2"
+          className="flex justify-center items-center gap-1 hover:gap-3 transition-all duration-200"
           target="_blank"
         >
           <span>Crafted by VByte</span>
-          <i className="ri-heart-3-fill hover:rotate-45 transition-transform duration-150"></i>
+          <i class="ri-arrow-right-line"></i>
         </a>
       </div>
     </section>

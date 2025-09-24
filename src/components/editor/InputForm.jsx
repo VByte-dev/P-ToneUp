@@ -17,7 +17,7 @@ let InputForm = (props) => {
   const [isToneOpen, setIsToneOpen] = useState(false);
 
   const modes = ["Post", "Reply", "Outreach"];
-  const platforms = ["X"];
+  const platforms = ["X", "LinkedIn"];
   const tones = [
     "Professional",
     "Formal",
@@ -95,7 +95,7 @@ let InputForm = (props) => {
 
   return (
     <>
-      <div className="space-y-6">
+      <div className="space-y-6 selection:bg-purple-300 selection:text-black">
         {/* Draft input */}
         <div className="font-[space]">
           <textarea
@@ -108,7 +108,7 @@ let InputForm = (props) => {
         </div>
 
         {/* Platform selector */}
-        <div>
+        <div className="select-none">
           <div className="flex flex-col text-sm relative w-full">
             <button
               type="button"
@@ -144,7 +144,7 @@ let InputForm = (props) => {
         </div>
 
         {/* Mode selector */}
-        <div>
+        <div className="select-none">
           <div className="flex flex-col text-sm relative w-full">
             <button
               type="button"
@@ -182,7 +182,7 @@ let InputForm = (props) => {
         </div>
 
         {/* Tone selector */}
-        <div>
+        <div className="select-none">
           <div className="flex flex-col text-sm relative w-full">
             <button
               type="button"
@@ -220,7 +220,7 @@ let InputForm = (props) => {
         </div>
 
         {/* Style instructions */}
-        <div>
+        <div >
           <input
             type="text"
             placeholder="Tweak style, clarity, or impact..."
@@ -233,7 +233,7 @@ let InputForm = (props) => {
         {/* Generate Btn */}
         <div className="pt-2">
           <button
-            className="flex justify-center items-center bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 font-[bricolage] text-white w-full h-11 rounded-md text-lg shadow-md transition"
+            className="flex justify-center items-center bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 font-[bricolage] text-white w-full h-11 rounded-md text-lg shadow-md transition select-none"
             onClick={handleGenerate}
           >
             Generate
