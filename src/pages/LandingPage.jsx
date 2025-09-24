@@ -33,16 +33,16 @@ const LandingPage = () => {
         >
           Turn Your Ideas into{" "}
           <span className="font-[tiemposLightItalic] text-amber-950">
-            Polished, Share-Ready Content
+            Polished
           </span>
+          , Share Ready Content
         </h1>
 
         {/* Supporting description */}
         <p className="mt-10 max-w-2xl w-full text-base sm:text-lg md:text-xl font-[tiemposLight] text-gray-700 leading-relaxed">
           ToneUp is your AI-powered writing companion. Instantly refine rough
           drafts into captivating posts, professional replies, and persuasive
-          outreach messages - perfectly tailored for X, LinkedIn, Instagram, and
-          more.
+          outreach messages - perfectly tailored for socialmedia.
         </p>
       </div>
 
