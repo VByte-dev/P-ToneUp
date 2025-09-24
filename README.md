@@ -11,7 +11,7 @@ ToneUp is an AI-powered tool that transforms your rough drafts into polished, re
 ## Getting Started
 
 ```bash
-git clone https://github.com/yourusername/toneup.git
+git clone https://github.com/vbyte-dev/toneup.git
 cd toneup
 npm install
 npm start
