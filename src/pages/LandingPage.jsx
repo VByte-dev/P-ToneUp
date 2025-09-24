@@ -68,7 +68,7 @@ const LandingPage = () => {
           type="email"
           name="email"
           required
-          placeholder="Your email to start your writing glow"
+          placeholder="Enter email, spark your writing flow"
           className="border-2 border-purple-500 bg-zinc-50 font-[tiemposLight] text-gray-800 px-6 py-3 rounded-full w-full sm:w-2/3 focus:outline-none focus:ring-2 focus:ring-purple-400 transition placeholder-gray-400"
         />
         <button
