@@ -1,8 +1,16 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 let InputForm = (props) => {
   // Destructuring props
   let { generate } = props;
+
+  // Handle scroll
+  let handleScroll = () => {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: "smooth",
+    });
+  };
 
   const [formData, setFormData] = useState({
     draft: "",
@@ -71,6 +79,7 @@ let InputForm = (props) => {
   let handleGenerate = () => {
     console.log("Data", formData);
     generate(formData);
+    handleScroll();
   };
 
   // Reusable dropdown arrow
