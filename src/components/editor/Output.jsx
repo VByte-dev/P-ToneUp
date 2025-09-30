@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 let Output = ({ outputText }) => {
   const editableRef = useRef(null);
 
-  // Handle copy indicator
+  // Copy indicator
   let [copyInd, setCopyInd] = useState(false);
 
   const handleCopy = () => {
@@ -13,9 +13,11 @@ let Output = ({ outputText }) => {
     }
   };
 
+  // Handle copy indicator
   useEffect(() => {
     setCopyInd(false);
   }, [outputText]);
+  let handleInput = () => setCopyInd(false);
 
   return (
     <div className="border-2 bg-purple-50 border-purple-400/50 rounded-md relative cursor-text min-h-100 selection:bg-purple-300 selection:text-black">
@@ -24,6 +26,7 @@ let Output = ({ outputText }) => {
         contentEditable
         suppressContentEditableWarning={true}
         ref={editableRef}
+        onInput={handleInput}
         className="p-4 mb-14 font-[space] outline-none min-h-[100px] whitespace-pre-wrap break-words"
       >
         {outputText}
@@ -32,7 +35,11 @@ let Output = ({ outputText }) => {
       {/* Copy button */}
       <div className="absolute bottom-2 px-2 w-full select-none">
         <button
-          className="flex justify-center items-center bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 font-[bricolage] text-white w-full h-11 rounded-md text-lg shadow-md transition"
+          className={`flex justify-center items-center bg-gradient-to-r font-[bricolage] text-white w-full h-11 rounded-md text-lg shadow-md transition ${
+            copyInd
+              ? " from-green-600 to-green-700 hover:from-green-700 hover:to-green-800"
+              : "from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700"
+          }`}
           onClick={handleCopy}
         >
           {copyInd ? "Copied" : "Copy"}
