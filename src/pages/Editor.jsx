@@ -8,6 +8,7 @@ let Editor = () => {
   let [outputText, setOutputText] = useState(
     "⚡ This box is hungry. Drop a draft and click generate!"
   );
+  let [prevOutput, setPrevOutput] = useState(outputText);
 
   // Loading states shown while generating content
   const loadingPlaceholders = [
@@ -33,7 +34,10 @@ let Editor = () => {
 
   // Handles text generation request
   let handleGenerate = async (v) => {
-    setOutputText(placeholder);
+    setOutputText((prevV) => {
+      setPrevOutput(prevV);
+      return placeholder;
+    });
 
     // Builds the AI prompt strictly based on user selections
     let buildPrompt = ({ draft, mode, platform, style, tone }) => {
@@ -88,7 +92,7 @@ Guidelines:
 - Only follow the selected options (mode, platform, tone, style).  
 - Do NOT infer or change mode/platform/style from the draft text.  
 - Preserve the original idea, but improve clarity, flow, and engagement.  
-- Avoid looking like it was made by AI.  
+- Avoid looking like it was made by AI.
 ${modePart}  
 ${tonePart}  
 ${stylePart}  
@@ -102,11 +106,11 @@ ${stylePart}
 
       const text = response.message?.content || response.toString();
 
-      setOutputText(text);
+      setOutputText((prevV) => text);
       console.log("Generated Data", text);
     } catch (error) {
       console.error(error);
-      setOutputText("❌ Something went wrong. Please try again.");
+      setOutputText((prevV) => "❌ Something went wrong. Please try again.");
     }
   };
 
@@ -120,7 +124,7 @@ ${stylePart}
 
         {/* Output section */}
         <div className="my-20 mx-8 sm:mx-14 md:mx-20 lg:mx-80 xl:mx-106 2xl:mx-120">
-          <Output outputText={outputText} />
+          <Output outputText={outputText} prevOutput={prevOutput} />
         </div>
       </div>
     </>

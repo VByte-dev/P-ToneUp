@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 
-let Output = ({ outputText }) => {
+let Output = ({ outputText, prevOutput }) => {
   const editableRef = useRef(null);
+
+  let [output, setOutput] = useState(outputText);
 
   // Copy indicator
   let [copyInd, setCopyInd] = useState(false);
@@ -16,11 +18,38 @@ let Output = ({ outputText }) => {
   // Handle copy indicator
   useEffect(() => {
     setCopyInd(false);
-  }, [outputText]);
+  }, [output]);
   let handleInput = () => setCopyInd(false);
+
+  // Handle Undo Redo
+  let handleUndo = () => {
+    setOutput(prevOutput);
+  };
+  let handleRedo = () => {
+    setOutput(outputText);
+  };
+
+  useEffect(() => {
+    setOutput(outputText);
+  }, [outputText]);
 
   return (
     <div className="border-2 bg-purple-50 border-purple-400/50 rounded-md relative cursor-text min-h-100 selection:bg-purple-300 selection:text-black">
+      {/* Undo Redo buttons */}
+      <div className="flex m-2 justify-end gap-2">
+        <button
+          className="bg-purple-100 w-8 h-8 flex justify-center items-center rounded-full p-4 border-2 border-purple-200 hover:bg-purple-200 active:bg-purple-200"
+          onClick={handleUndo}
+        >
+          <i className="ri-arrow-go-back-line text-purple-800"></i>
+        </button>
+        <button
+          className="bg-purple-100 w-8 h-8 flex justify-center items-center rounded-full p-4 border-2 border-purple-200 hover:bg-purple-200 active:bg-purple-200"
+          onClick={handleRedo}
+        >
+          <i className="ri-arrow-go-forward-line text-purple-800"></i>
+        </button>
+      </div>
       {/* Output text */}
       <div
         contentEditable
@@ -29,7 +58,7 @@ let Output = ({ outputText }) => {
         onInput={handleInput}
         className="p-4 mb-14 font-[space] outline-none min-h-[100px] whitespace-pre-wrap break-words"
       >
-        {outputText}
+        {output}
       </div>
 
       {/* Copy button */}
