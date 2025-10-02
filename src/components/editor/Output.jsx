@@ -38,13 +38,13 @@ let Output = ({ outputText, prevOutput }) => {
       {/* Undo Redo buttons */}
       <div className="flex m-2 justify-end gap-2">
         <button
-          className="bg-purple-100 w-8 h-8 flex justify-center items-center rounded-full p-4 border-2 border-purple-200 hover:bg-purple-200 active:bg-purple-200"
+          className="bg-purple-100 w-8 h-8 flex justify-center items-center rounded-lg p-4 border-2 border-purple-200 hover:bg-purple-200 active:bg-purple-200"
           onClick={handleUndo}
         >
           <i className="ri-arrow-go-back-line text-purple-800"></i>
         </button>
         <button
-          className="bg-purple-100 w-8 h-8 flex justify-center items-center rounded-full p-4 border-2 border-purple-200 hover:bg-purple-200 active:bg-purple-200"
+          className="bg-purple-100 w-8 h-8 flex justify-center items-center rounded-lg p-4 border-2 border-purple-200 hover:bg-purple-200 active:bg-purple-200"
           onClick={handleRedo}
         >
           <i className="ri-arrow-go-forward-line text-purple-800"></i>

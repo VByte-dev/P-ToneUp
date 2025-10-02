@@ -247,7 +247,7 @@ let InputForm = (props) => {
           >
             Generate
             <span className="mx-1">
-              <i className="ri-pencil-line"></i>
+              <i class="ri-gemini-fill"></i>
             </span>
           </button>
         </div>
