@@ -90,6 +90,13 @@ let InputForm = (props) => {
     handleBScroll();
   };
 
+  // Handle keydown generate (Enter)
+  let handleKeyEnter = (e) => {
+    if (e.key === "Enter") {
+      handleGenerate();
+    }
+  };
+
   // Handles regenerate
   useEffect(() => {
     if (isReGenerate) {
@@ -129,6 +136,7 @@ let InputForm = (props) => {
             rows={5}
             value={formData.draft}
             onChange={(e) => handleChange("draft", e.target.value)}
+            onKeyDown={handleKeyEnter}
           />
         </div>
 
