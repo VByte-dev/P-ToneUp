@@ -2,10 +2,10 @@ import React, { useRef, useState } from "react";
 
 let InputForm = (props) => {
   // Destructuring props
-  let { generate } = props;
+  let { generate, generatedVal } = props;
 
   // Handle scroll
-  let handleScroll = () => {
+  let handleBScroll = () => {
     window.scrollTo({
       top: document.body.scrollHeight,
       behavior: "smooth",
@@ -15,7 +15,7 @@ let InputForm = (props) => {
   const [formData, setFormData] = useState({
     draft: "",
     mode: "Post",
-    tone: "Professional", // default tone
+    tone: "Professional",
     style: "",
     platform: "X",
   });
@@ -79,7 +79,7 @@ let InputForm = (props) => {
   let handleGenerate = () => {
     console.log("Data", formData);
     generate(formData);
-    handleScroll();
+    handleBScroll();
   };
 
   // Reusable dropdown arrow
@@ -111,7 +111,7 @@ let InputForm = (props) => {
             placeholder="Paste or write your draft here..."
             className="  rounded-tl-md rounded-bl-md rounded-tr-md px-4 py-4 w-full transition outline-none min-h-50"
             rows={5}
-            value={formData.draft}
+            value={generatedVal}
             onChange={(e) => handleChange("draft", e.target.value)}
           />
         </div>

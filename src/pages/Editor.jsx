@@ -114,17 +114,27 @@ ${stylePart}
     }
   };
 
+  // use-as-draft - Move generated output back into the draft
+  let [generatedVal, setGeneratedVal] = useState();
+  let handleUseAsDraft = (outputV) => {
+    setGeneratedVal(outputV);
+  };
+
   return (
     <>
       <div>
         {/* Input section */}
         <div className="mt-30 mb-20 mx-8 sm:mx-14 md:mx-20 lg:mx-80 xl:mx-106 2xl:mx-120">
-          <InputForm generate={handleGenerate} />
+          <InputForm generate={handleGenerate} generatedVal={generatedVal} />
         </div>
 
         {/* Output section */}
         <div className="my-20 mx-8 sm:mx-14 md:mx-20 lg:mx-80 xl:mx-106 2xl:mx-120">
-          <Output outputText={outputText} prevOutput={prevOutput} />
+          <Output
+            outputText={outputText}
+            prevOutput={prevOutput}
+            handleUseAsDraft={handleUseAsDraft}
+          />
         </div>
       </div>
     </>

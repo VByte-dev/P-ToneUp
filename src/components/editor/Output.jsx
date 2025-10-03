@@ -1,13 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 
-let Output = ({ outputText, prevOutput }) => {
+let Output = ({ outputText, prevOutput, handleUseAsDraft }) => {
   const editableRef = useRef(null);
 
   let [output, setOutput] = useState(outputText);
 
-  // Copy indicator
-  let [copyInd, setCopyInd] = useState(false);
-
+  // Handle copy
   const handleCopy = () => {
     if (editableRef.current) {
       navigator.clipboard.writeText(editableRef.current.innerText);
@@ -15,18 +13,37 @@ let Output = ({ outputText, prevOutput }) => {
     }
   };
 
+  // Handle scroll
+  let handleTScroll = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   // Handle copy indicator
+  let [copyInd, setCopyInd] = useState(false);
+
   useEffect(() => {
     setCopyInd(false);
   }, [output]);
   let handleInput = () => setCopyInd(false);
 
   // Handle Undo Redo
+  let [isUndo, setIsUndo] = useState(false);
   let handleUndo = () => {
     setOutput(prevOutput);
+    setIsUndo(true);
   };
   let handleRedo = () => {
     setOutput(outputText);
+    setIsUndo(false);
+  };
+
+  // Handle use-as-draft
+  let onUseAsDraft = () => {
+    handleUseAsDraft(output);
+    handleTScroll();
   };
 
   useEffect(() => {
@@ -35,19 +52,28 @@ let Output = ({ outputText, prevOutput }) => {
 
   return (
     <div className="border-2 bg-purple-50 border-purple-400/50 rounded-md relative cursor-text min-h-100 selection:bg-purple-300 selection:text-black">
-      {/* Undo Redo buttons */}
+      {/* Tools */}
       <div className="flex m-2 justify-end gap-2">
+        {/* Undo */}
         <button
           className="bg-purple-100 w-8 h-8 flex justify-center items-center rounded-lg p-4 border-2 border-purple-200 hover:bg-purple-200 active:bg-purple-200"
-          onClick={handleUndo}
+          onClick={handleUndo} title="Undo"
         >
           <i className="ri-arrow-go-back-line text-purple-800"></i>
         </button>
+        {/* Redo */}
         <button
           className="bg-purple-100 w-8 h-8 flex justify-center items-center rounded-lg p-4 border-2 border-purple-200 hover:bg-purple-200 active:bg-purple-200"
-          onClick={handleRedo}
+          onClick={handleRedo} title="Redo"
         >
           <i className="ri-arrow-go-forward-line text-purple-800"></i>
+        </button>
+        {/* Use as draft */}
+        <button
+          className="bg-purple-100 w-8 h-8 flex justify-center items-center rounded-lg p-4 border-2 border-purple-200 hover:bg-purple-200 active:bg-purple-200"
+          onClick={onUseAsDraft} title="Use as draft"
+        >
+          <i className="ri-pencil-fill text-purple-800"></i>
         </button>
       </div>
       {/* Output text */}
