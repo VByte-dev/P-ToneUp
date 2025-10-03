@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-let Output = ({ outputText, prevOutput, handleUseAsDraft }) => {
+let Output = ({ outputText, prevOutput, isReGenerate, handleUseAsDraft }) => {
   const editableRef = useRef(null);
 
   let [output, setOutput] = useState(outputText);
@@ -42,9 +42,15 @@ let Output = ({ outputText, prevOutput, handleUseAsDraft }) => {
 
   // Handle use-as-draft
   let onUseAsDraft = () => {
-    handleUseAsDraft(output);
+    handleUseAsDraft(editableRef.current.innerText);
     handleTScroll();
   };
+
+  // Handle regenerate
+  let handleReGenerate = () => {
+    isReGenerate(true);
+    // console.log("Output Page");
+  }
 
   useEffect(() => {
     setOutput(outputText);
@@ -57,25 +63,39 @@ let Output = ({ outputText, prevOutput, handleUseAsDraft }) => {
         {/* Undo */}
         <button
           className="bg-purple-100 w-8 h-8 flex justify-center items-center rounded-lg p-4 border-2 border-purple-200 hover:bg-purple-200 active:bg-purple-200"
-          onClick={handleUndo} title="Undo"
+          onClick={handleUndo}
+          title="Undo"
         >
           <i className="ri-arrow-go-back-line text-purple-800"></i>
         </button>
         {/* Redo */}
         <button
           className="bg-purple-100 w-8 h-8 flex justify-center items-center rounded-lg p-4 border-2 border-purple-200 hover:bg-purple-200 active:bg-purple-200"
-          onClick={handleRedo} title="Redo"
+          onClick={handleRedo}
+          title="Redo"
         >
           <i className="ri-arrow-go-forward-line text-purple-800"></i>
         </button>
+
+        {/* Regenerate */}
+        <button
+          className="bg-purple-100 w-8 h-8 flex justify-center items-center rounded-lg p-4 border-2 border-purple-200 hover:bg-purple-200 active:bg-purple-200"
+          onClick={handleReGenerate}
+          title="Re-Generate"
+        >
+          <i className="ri-gemini-fill text-purple-800"></i>
+        </button>
+
         {/* Use as draft */}
         <button
           className="bg-purple-100 w-8 h-8 flex justify-center items-center rounded-lg p-4 border-2 border-purple-200 hover:bg-purple-200 active:bg-purple-200"
-          onClick={onUseAsDraft} title="Use as draft"
+          onClick={onUseAsDraft}
+          title="Use as draft"
         >
           <i className="ri-pencil-fill text-purple-800"></i>
         </button>
       </div>
+
       {/* Output text */}
       <div
         contentEditable

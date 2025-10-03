@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 // Components
 import InputForm from "../components/editor/InputForm";
@@ -112,6 +112,7 @@ ${stylePart}
       console.error(error);
       setOutputText((prevV) => "❌ Something went wrong. Please try again.");
     }
+    setReGenerate(false);
   };
 
   // use-as-draft - Move generated output back into the draft
@@ -120,12 +121,23 @@ ${stylePart}
     setGeneratedVal(outputV);
   };
 
+  // Regenerate - State
+  let [reGenerate, setReGenerate] = useState(false);
+
+  useEffect(() => {
+    // console.log("Input Page");
+  }, [reGenerate]);
+
   return (
     <>
       <div>
         {/* Input section */}
         <div className="mt-30 mb-20 mx-8 sm:mx-14 md:mx-20 lg:mx-80 xl:mx-106 2xl:mx-120">
-          <InputForm generate={handleGenerate} generatedVal={generatedVal} />
+          <InputForm
+            generate={handleGenerate}
+            generatedVal={generatedVal}
+            isReGenerate={reGenerate}
+          />
         </div>
 
         {/* Output section */}
@@ -133,6 +145,7 @@ ${stylePart}
           <Output
             outputText={outputText}
             prevOutput={prevOutput}
+            isReGenerate={setReGenerate}
             handleUseAsDraft={handleUseAsDraft}
           />
         </div>

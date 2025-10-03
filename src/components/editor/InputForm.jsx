@@ -1,8 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 let InputForm = (props) => {
   // Destructuring props
-  let { generate, generatedVal } = props;
+  let { generate, generatedVal, isReGenerate } = props;
 
   // Handle scroll
   let handleBScroll = () => {
@@ -19,6 +19,14 @@ let InputForm = (props) => {
     style: "",
     platform: "X",
   });
+
+  // use-as-draft - Use as draft functionality
+  useEffect(() => {
+    formData.draft = generatedVal;
+    setFormData((preV) => {
+      return { ...preV, draft: generatedVal };
+    });
+  }, [generatedVal]);
 
   const [isModeOpen, setIsModeOpen] = useState(false);
   const [isPlatformOpen, setIsPlatformOpen] = useState(false);
@@ -82,6 +90,14 @@ let InputForm = (props) => {
     handleBScroll();
   };
 
+  // Handles regenerate
+  useEffect(() => {
+    if (isReGenerate) {
+      // console.log("Input Page");
+      handleGenerate();
+    }
+  }, [isReGenerate]);
+
   // Reusable dropdown arrow
   const DropdownIcon = ({ open }) => (
     <svg
@@ -111,7 +127,7 @@ let InputForm = (props) => {
             placeholder="Paste or write your draft here..."
             className="  rounded-tl-md rounded-bl-md rounded-tr-md px-4 py-4 w-full transition outline-none min-h-50"
             rows={5}
-            value={generatedVal}
+            value={formData.draft}
             onChange={(e) => handleChange("draft", e.target.value)}
           />
         </div>
@@ -247,7 +263,7 @@ let InputForm = (props) => {
           >
             Generate
             <span className="mx-1">
-              <i class="ri-gemini-fill"></i>
+              <i className="ri-gemini-fill"></i>
             </span>
           </button>
         </div>
