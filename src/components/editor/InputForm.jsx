@@ -86,8 +86,11 @@ let InputForm = (props) => {
   // Handle generate
   let handleGenerate = () => {
     console.log("Data", formData);
-    generate(formData);
-    handleBScroll();
+
+    if (formData.draft) {
+      generate(formData);
+      handleBScroll();
+    }
   };
 
   // Handle keydown generate (Enter)

@@ -50,7 +50,7 @@ let Output = ({ outputText, prevOutput, isReGenerate, handleUseAsDraft }) => {
   let handleReGenerate = () => {
     isReGenerate(true);
     // console.log("Output Page");
-  }
+  };
 
   useEffect(() => {
     setOutput(outputText);
